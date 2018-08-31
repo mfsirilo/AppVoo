@@ -1,6 +1,6 @@
 package javaapplication3;
 
-import com.sun.xml.internal.stream.buffer.stax.StreamWriterBufferCreator;
+//import com.sun.xml.internal.stream.buffer.stax.StreamWriterBufferCreator;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -83,12 +83,16 @@ public class ControleVoo {
 
     public void CadastraVoo() throws IOException {
         System.out.println("Informe os dados do Voo");
-        numeroVoo = scan.nextInt();
-        horaSaida = scan.next();
-        horaChegada = scan.next();
-        cidadeSaida = scan.next();
-        cidadeChegada = scan.next();
-        gravarNoCsv(horaSaida, horaSaida, horaChegada, cidadeSaida, cidadeChegada);
+        //numeroVoo = scan.nextInt();
+        String numVoo = scan.nextLine();
+        horaSaida = scan.nextLine();
+        horaChegada = scan.nextLine();
+        cidadeSaida = scan.nextLine();
+        cidadeChegada = scan.nextLine();
+        
+        // CONVERTI O NUMERO DO VOO EM UMA STRING, POIS O MÉTODO DE GRAVAÇÃO UTILIZA STRINGS
+        
+        gravarNoCsv(numVoo, horaSaida, horaChegada, cidadeSaida, cidadeChegada);
     }
 
     public void readCsvFile() {
@@ -118,37 +122,26 @@ public class ControleVoo {
 
     //private static final String NEW_LINE_SEPARATOR = "\n";
     public static void gravarNoCsv(String numeroVoo, String horaSaida, String horaChegada, String cidadeSaida, String cidadeChegada) throws IOException {
-        String arquivo = "/home/marcos/NetBeansProjects/AppVooCSV/arquivos/voos.csv";
+        //String arquivo = "/home/marcos/NetBeansProjects/AppVooCSV/arquivos/voos.csv";
+        String arquivo = "C:\\Users\\bruno\\Documents\\NetBeansProjects\\AppVoo\\arquivos\\voos.csv";
         BufferedReader bufferReader;
         BufferedWriter buffer;
-        String linha = "";
         String divisor = ",";
 
-        FileWriter writer = new FileWriter(arquivo);
+        
+        //CONSTRUINDO A LINHA
+        
+        String linha = numeroVoo + ',' + horaSaida + ',' + horaChegada + ',' + cidadeSaida + ',' + cidadeChegada + "\n";
+        
         try {
+            //CRIANDO O BUFFER QUE 'E UM WRITER PASSANDO COMO PARAMETRO O ARQUIVO E O VALOR BOOLEANO TRUE, DESSA FORMA JÁ ESTÁ INFORMANDO QUE É UM APPEND
+            buffer = new BufferedWriter(new FileWriter(arquivo, true));
+
             
-            bufferReader = new BufferedReader(new FileReader(arquivo));
-
-            buffer = new BufferedWrite(new FileWrite(arquivo));
-
-            while ((linha = bufferReader.readLine()) != null) {
-
-                if (buffer.readLine() == null) {
-                    writer.append(numeroVoo);
-                    writer.append(',');
-                    writer.append(horaSaida);
-                    writer.append(',');
-                    writer.append(horaChegada);
-                    writer.append(',');
-                    writer.append(cidadeSaida);
-                    writer.append(',');
-                    writer.append(cidadeChegada);
-                    writer.append('\n');
-                }
-            }
-            //generate whatever data you want
-            writer.flush();
-            writer.close();
+            buffer.write(linha);
+            buffer.close();
+            //writer.flush();
+            //writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

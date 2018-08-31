@@ -1,10 +1,11 @@
 package javaapplication3;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Principal {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Principal ler = new Principal();
         ControleVoo cadVoo = new ControleVoo();
